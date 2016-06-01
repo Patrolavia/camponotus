@@ -33,26 +33,6 @@ func (a *API) GetFile(file string) ([]byte, error) {
 	return a.call("getFile", params)
 }
 
-// KickChatMember maps to https://core.telegram.org/bots/api#kickchatmember
-func (a *API) KickChatMember(chat string, user int) ([]byte, error) {
-	params := url.Values{}
-
-	params.Set("chat_id", chat)
-	params.Set("user_id", strconv.Itoa(user))
-
-	return a.call("kickChatMember", params)
-}
-
-// UnbanChatMember maps to https://core.telegram.org/bots/api#unbanchatmember
-func (a *API) UnbanChatMember(chat string, user int) ([]byte, error) {
-	params := url.Values{}
-
-	params.Set("chat_id", chat)
-	params.Set("user_id", strconv.Itoa(user))
-
-	return a.call("unbanChatMember", params)
-}
-
 // AnswerCallbackQuery maps to https://core.telegram.org/bots/api#answercallbackquery
 func (a *API) AnswerCallbackQuery(query, text string, alert bool) ([]byte, error) {
 	params := url.Values{}
