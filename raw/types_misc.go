@@ -8,6 +8,16 @@ import (
 	"strconv"
 )
 
+// Update represents an incoming update.
+type Update struct {
+	ID                 int                 `json:"update_id"`
+	Message            *Message            `json:"message,omitempty"`
+	EditedMessage      *Message            `json:"edited_message,omitempty"`
+	InlineQuery        *InlineQuery        `json:"inline_query,omitempty"`
+	ChosenInlineresult *ChosenInlineResult `json:"chosen_inline_result,omitempty"`
+	CallbackQuery      *CallbackQuery      `json:"callback_query,omitempty"`
+}
+
 // VictimType represents 5 kinds of valid receiver
 type VictimType string
 

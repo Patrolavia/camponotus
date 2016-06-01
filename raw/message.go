@@ -9,6 +9,13 @@ import (
 	"strconv"
 )
 
+// these are valid parse modes
+const (
+	TextMode     = ""
+	HTMLMode     = "HTML"
+	MarkdownMode = "Markdown"
+)
+
 // SendMessage maps to https://core.telegram.org/bots/api#sendmessage
 func (a *API) SendMessage(chat, text, mode string, noPreview, silent bool, reply int, markup []byte) ([]byte, error) {
 	params := url.Values{}
