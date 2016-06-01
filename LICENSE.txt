@@ -1,0 +1,15 @@
+Copyright (C) 2015-2016
+-  Ronmi Ren (Chung-ping Jen) <ronmi@patrolavia.com>
+All rights reserved.
+
+Camponotus is free software: it is distributed in the hope that
+it will be useful, but WITHOUT ANY WARRANTY; without even the
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.
+
+Camponotus is distributed upder GPLv3 and MIT license. You MUST
+explictly choose any of the two licenses when modifying or
+redistributing Camponotus. If you did not explictly choose a
+valid license, GPLv3 is used.
+
+See gplv3.txt and mit.txt for detailed license information.
