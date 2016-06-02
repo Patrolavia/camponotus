@@ -6,4 +6,4 @@ Package api represents Telegram Bot API in raw format: all parameters and return
 
 API methods listed here DO NOT VALIDATE the content of parameters.
 */
-package api
+package telegram

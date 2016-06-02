@@ -1,7 +1,7 @@
 // This file is part of Camponotus
 // Camponotus is free software: see LICENSE.txt for more details.
 
-package api
+package telegram
 
 import (
 	"io"
