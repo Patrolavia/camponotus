@@ -1,7 +1,7 @@
 // This file is part of Camponotus
 // Camponotus is free software: see LICENSE.txt for more details.
 
-package raw
+package api
 
 // InlineQuery represents an incoming inline query.
 // When the user sends an empty query, your bot could return some default or trending results.

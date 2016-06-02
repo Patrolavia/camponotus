@@ -1,7 +1,7 @@
 // This file is part of Camponotus
 // Camponotus is free software: see LICENSE.txt for more details.
 
-package raw
+package api
 
 import (
 	"io"
@@ -14,7 +14,7 @@ type Update struct {
 	Message            *Message            `json:"message,omitempty"`
 	EditedMessage      *Message            `json:"edited_message,omitempty"`
 	InlineQuery        *InlineQuery        `json:"inline_query,omitempty"`
-	ChosenInlineresult *ChosenInlineResult `json:"chosen_inline_result,omitempty"`
+	ChosenInlineResult *ChosenInlineResult `json:"chosen_inline_result,omitempty"`
 	CallbackQuery      *CallbackQuery      `json:"callback_query,omitempty"`
 }
 

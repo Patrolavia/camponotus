@@ -1,7 +1,7 @@
 // This file is part of Camponotus
 // Camponotus is free software: see LICENSE.txt for more details.
 
-package raw
+package api
 
 // ReplyKeyboardMarkup represents a custom keyboard with reply options.
 type ReplyKeyboardMarkup struct {
