@@ -27,11 +27,13 @@ func (a *API) SendMessage(chat, text, mode string, noPreview, silent bool, reply
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendMessage", params)
 }
@@ -58,11 +60,13 @@ func (a *API) SendPhoto(chat, photo, caption string, silent bool, reply int, mar
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendPhoto", params)
 }
@@ -76,11 +80,13 @@ func (a *API) UploadPhoto(chat string, photo io.Reader, caption string, silent b
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.uploadAndSetMsg("sendPhoto", params, "photo", photo)
 }
@@ -97,11 +103,13 @@ func (a *API) SendAudio(chat, audio string, duration int, performer, title strin
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendAudio", params)
 }
@@ -117,11 +125,13 @@ func (a *API) UploadAudio(chat string, audio io.Reader, duration int, performer,
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.uploadAndSetMsg("sendAudio", params, "audio", audio)
 }
@@ -136,11 +146,13 @@ func (a *API) SendDocument(chat, document, caption string, silent bool, reply in
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendDocument", params)
 }
@@ -154,11 +166,13 @@ func (a *API) UploadDocument(chat string, document io.Reader, caption string, si
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.uploadAndSetMsg("sendDocument", params, "document", document)
 }
@@ -173,11 +187,13 @@ func (a *API) SendSticker(chat, sticker, caption string, silent bool, reply int,
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendSticker", params)
 }
@@ -190,11 +206,13 @@ func (a *API) UploadSticker(chat string, sticker io.Reader, caption string, sile
 	optStr(params, "caption", caption)
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.uploadAndSetMsg("sendSticker", params, "sticker", sticker)
 }
@@ -212,11 +230,13 @@ func (a *API) SendVideo(chat, video string, duration, width, height int, caption
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendVideo", params)
 }
@@ -233,11 +253,13 @@ func (a *API) UploadVideo(chat string, video io.Reader, duration, width, height 
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.uploadAndSetMsg("sendVideo", params, "video", video)
 }
@@ -252,11 +274,13 @@ func (a *API) SendVoice(chat, voice string, duration int, silent bool, reply int
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendVoice", params)
 }
@@ -270,11 +294,13 @@ func (a *API) UploadVoice(chat string, voice io.Reader, duration int, silent boo
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.uploadAndSetMsg("sendVoice", params, "voice", voice)
 }
@@ -289,11 +315,13 @@ func (a *API) SendLocation(chat string, lat, lng float64, silent bool, reply int
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendLocation", params)
 }
@@ -311,11 +339,13 @@ func (a *API) SendVenue(chat string, lat, lng float64, title, addr, foursq strin
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendVenue", params)
 }
@@ -331,11 +361,13 @@ func (a *API) SendContact(chat, phone, firstName, lastName string, silent bool, 
 	optBool(params, "disable_notification", silent)
 	optInt(params, "reply_to_message_id", reply)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("sendContact", params)
 }

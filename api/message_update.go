@@ -21,11 +21,13 @@ func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, 
 	optStr(params, "parse_mode", mode)
 	optBool(params, "disable_Web_page_preview", noPreview)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("editMessageText", params)
 }
@@ -42,11 +44,13 @@ func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup Repl
 	optStr(params, "parse_mode", mode)
 	optBool(params, "disable_Web_page_preview", noPreview)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("editMessageText", params)
 }
@@ -64,11 +68,13 @@ func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview 
 	optStr(params, "parse_mode", mode)
 	optBool(params, "disable_Web_page_preview", noPreview)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("editMessageCaption", params)
 }
@@ -85,11 +91,13 @@ func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, marku
 	optStr(params, "parse_mode", mode)
 	optBool(params, "disable_Web_page_preview", noPreview)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		optJSON(params, "reply_markup", m)
 	}
-	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("editMessageCaption", params)
 }
@@ -104,11 +112,13 @@ func (a *API) EditMarkup(chat string, msg int, markup ReplyMarkup) (*Message, er
 	params.Set("chat_id", chat)
 	params.Set("message_id", strconv.Itoa(msg))
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		params.Set("reply_markup", string(m))
 	}
-	params.Set("reply_markup", string(m))
 
 	return a.callAndSetMsg("editMessageReplyMarkup", params)
 }
@@ -122,11 +132,13 @@ func (a *API) EditInlineMarkup(msg string, markup ReplyMarkup) (*Message, error)
 
 	params.Set("inline_message_id", msg)
 
-	m, err := markup.Bytes()
-	if err != nil {
-		return nil, err
+	if markup != nil {
+		m, err := markup.Bytes()
+		if err != nil {
+			return nil, err
+		}
+		params.Set("reply_markup", string(m))
 	}
-	params.Set("reply_markup", string(m))
 
 	return a.callAndSetMsg("editMessageReplyMarkup", params)
 }
