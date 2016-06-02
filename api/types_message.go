@@ -140,9 +140,3 @@ type Venue struct {
 	Address    string    `json:"address"`
 	Foursquare string    `json:"fourscuare_id,omitempty"`
 }
-
-// ForceReply will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply').
-type ForceReply struct {
-	Reply     bool `json:"force_reply,omitempty"`
-	Selective bool `json:"selective,omitempty"`
-}

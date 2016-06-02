@@ -3,16 +3,25 @@
 
 package api
 
-import "net/url"
+import (
+	"encoding/json"
+	"net/url"
+)
 
 // AnswerInlineQuery maps to https://core.telegram.org/bots/api#answerinlinequery
 func (a *API) AnswerInlineQuery(
-	query string, results []byte, cache int, personal bool, next, pm, pmParam string,
+	query string, results []InlineQueryResult, cache int, personal bool, next, pm, pmParam string,
 ) error {
 	params := url.Values{}
 
 	params.Set("inline_query_id", query)
-	params.Set("results", string(results))
+
+	res, err := json.Marshal(results)
+	if err != nil {
+		return err
+	}
+	params.Set("results", string(res))
+
 	optInt(params, "cache_time", cache)
 	optBool(params, "is_personal", personal)
 	optStr(params, "next_offset", next)

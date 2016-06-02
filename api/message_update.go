@@ -12,7 +12,7 @@ import (
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, markup []byte) (*Message, error) {
+func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -20,7 +20,12 @@ func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, 
 	params.Set("text", text)
 	optStr(params, "parse_mode", mode)
 	optBool(params, "disable_Web_page_preview", noPreview)
-	optJSON(params, "reply_markup", markup)
+
+	m, err := markup.Bytes()
+	if err != nil {
+		return nil, err
+	}
+	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("editMessageText", params)
 }
@@ -29,14 +34,19 @@ func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, 
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup []byte) (*Message, error) {
+func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)
 	params.Set("text", text)
 	optStr(params, "parse_mode", mode)
 	optBool(params, "disable_Web_page_preview", noPreview)
-	optJSON(params, "reply_markup", markup)
+
+	m, err := markup.Bytes()
+	if err != nil {
+		return nil, err
+	}
+	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("editMessageText", params)
 }
@@ -45,7 +55,7 @@ func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup []by
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview bool, markup []byte) (*Message, error) {
+func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -53,7 +63,12 @@ func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview 
 	params.Set("caption", caption)
 	optStr(params, "parse_mode", mode)
 	optBool(params, "disable_Web_page_preview", noPreview)
-	optJSON(params, "reply_markup", markup)
+
+	m, err := markup.Bytes()
+	if err != nil {
+		return nil, err
+	}
+	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("editMessageCaption", params)
 }
@@ -62,14 +77,19 @@ func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview 
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, markup []byte) (*Message, error) {
+func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)
 	params.Set("caption", caption)
 	optStr(params, "parse_mode", mode)
 	optBool(params, "disable_Web_page_preview", noPreview)
-	optJSON(params, "reply_markup", markup)
+
+	m, err := markup.Bytes()
+	if err != nil {
+		return nil, err
+	}
+	optJSON(params, "reply_markup", m)
 
 	return a.callAndSetMsg("editMessageCaption", params)
 }
@@ -78,12 +98,17 @@ func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, marku
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditMarkup(chat string, msg int, markup []byte) (*Message, error) {
+func (a *API) EditMarkup(chat string, msg int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
 	params.Set("message_id", strconv.Itoa(msg))
-	params.Set("reply_markup", string(markup))
+
+	m, err := markup.Bytes()
+	if err != nil {
+		return nil, err
+	}
+	params.Set("reply_markup", string(m))
 
 	return a.callAndSetMsg("editMessageReplyMarkup", params)
 }
@@ -92,11 +117,16 @@ func (a *API) EditMarkup(chat string, msg int, markup []byte) (*Message, error) 
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditInlineMarkup(msg string, markup []byte) (*Message, error) {
+func (a *API) EditInlineMarkup(msg string, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)
-	params.Set("reply_markup", string(markup))
+
+	m, err := markup.Bytes()
+	if err != nil {
+		return nil, err
+	}
+	params.Set("reply_markup", string(m))
 
 	return a.callAndSetMsg("editMessageReplyMarkup", params)
 }

@@ -3,12 +3,24 @@
 
 package api
 
+import "encoding/json"
+
+// ReplyMarkup is additional interface options for sending messages
+type ReplyMarkup interface {
+	Bytes() ([]byte, error)
+}
+
 // ReplyKeyboardMarkup represents a custom keyboard with reply options.
 type ReplyKeyboardMarkup struct {
 	Keyboard  [][]KeyboardButton `json:"keyboard"`
 	Resize    bool               `json:"resize_keyboard,omitempty"`
 	Once      bool               `json:"one_time_keyboard,omitempty"`
 	Selective bool               `json:"selective,omitempty"`
+}
+
+// Bytes serializes the structure into JSON format
+func (m *ReplyKeyboardMarkup) Bytes() ([]byte, error) {
+	return json.Marshal(m)
 }
 
 // KeyboardButton represents one button of the reply keyboard.
@@ -26,9 +38,19 @@ type ReplyKeyboardHide struct {
 	Selective bool `json:"selective,omitempty"`
 }
 
+// Bytes serializes the structure into JSON format
+func (h *ReplyKeyboardHide) Bytes() ([]byte, error) {
+	return json.Marshal(h)
+}
+
 // InlineKeyboardMarkup represents an inline keyboard that appears right next to the message it belongs to.
 type InlineKeyboardMarkup struct {
 	Keyboard [][]InlineKeyboardButton `json:"inline_keyboard"`
+}
+
+// Bytes serializes the structure into JSON format
+func (m *InlineKeyboardMarkup) Bytes() ([]byte, error) {
+	return json.Marshal(m)
 }
 
 // InlineKeyboardButton represents one button of an inline keyboard.
@@ -38,6 +60,17 @@ type InlineKeyboardButton struct {
 	URL    string `json:"url,omitempty"`
 	Data   string `json:"callback_data,omitempty"`
 	Switch string `json:"switch_inline_query,omitempty"`
+}
+
+// ForceReply will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply').
+type ForceReply struct {
+	Reply     bool `json:"force_reply,omitempty"`
+	Selective bool `json:"selective,omitempty"`
+}
+
+// Bytes serializes the structure into JSON format
+func (r *ForceReply) Bytes() ([]byte, error) {
+	return json.Marshal(r)
 }
 
 // CallbackQuery represents an incoming callback query from a callback button in an inline keyboard.
