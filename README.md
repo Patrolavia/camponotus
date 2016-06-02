@@ -1,1 +1,1 @@
-Camponotus maps telegram bot api to Go
+This package maps telegram bot api to Go
