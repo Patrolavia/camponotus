@@ -16,6 +16,10 @@ func (a *API) AnswerInlineQuery(
 
 	params.Set("inline_query_id", query)
 
+	for idx := range results {
+		results[idx].ValidateType()
+	}
+
 	res, err := json.Marshal(results)
 	if err != nil {
 		return err
