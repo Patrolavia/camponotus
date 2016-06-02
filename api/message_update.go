@@ -9,6 +9,9 @@ import (
 )
 
 // EditText edits text message, maps to https://core.telegram.org/bots/api#editmessagetext
+//
+// By official documentations, server will return boolean true when editing the message sent by others.
+// This method will report json parse error when such situation.
 func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, markup []byte) (*Message, error) {
 	params := url.Values{}
 
@@ -23,6 +26,9 @@ func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, 
 }
 
 // EditInlineText edits inline text message, maps to https://core.telegram.org/bots/api#editmessagetext
+//
+// By official documentations, server will return boolean true when editing the message sent by others.
+// This method will report json parse error when such situation.
 func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup []byte) (*Message, error) {
 	params := url.Values{}
 
@@ -36,6 +42,9 @@ func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup []by
 }
 
 // EditCaption edits caption message, maps to https://core.telegram.org/bots/api#editmessagecaption
+//
+// By official documentations, server will return boolean true when editing the message sent by others.
+// This method will report json parse error when such situation.
 func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview bool, markup []byte) (*Message, error) {
 	params := url.Values{}
 
@@ -50,6 +59,9 @@ func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview 
 }
 
 // EditInlineCaption edits inline caption message, maps to https://core.telegram.org/bots/api#editmessagecaption
+//
+// By official documentations, server will return boolean true when editing the message sent by others.
+// This method will report json parse error when such situation.
 func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, markup []byte) (*Message, error) {
 	params := url.Values{}
 
@@ -63,6 +75,9 @@ func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, marku
 }
 
 // EditMarkup edits text message, maps to https://core.telegram.org/bots/api#editmessagetext
+//
+// By official documentations, server will return boolean true when editing the message sent by others.
+// This method will report json parse error when such situation.
 func (a *API) EditMarkup(chat string, msg int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
@@ -74,6 +89,9 @@ func (a *API) EditMarkup(chat string, msg int, markup []byte) (*Message, error) 
 }
 
 // EditInlineMarkup edits text message, maps to https://core.telegram.org/bots/api#editmessagetext
+//
+// By official documentations, server will return boolean true when editing the message sent by others.
+// This method will report json parse error when such situation.
 func (a *API) EditInlineMarkup(msg string, markup []byte) (*Message, error) {
 	params := url.Values{}
 
