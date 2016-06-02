@@ -112,13 +112,11 @@ func (a *API) EditMarkup(chat string, msg int, markup ReplyMarkup) (*Message, er
 	params.Set("chat_id", chat)
 	params.Set("message_id", strconv.Itoa(msg))
 
-	if markup != nil {
-		m, err := markup.Bytes()
-		if err != nil {
-			return nil, err
-		}
-		params.Set("reply_markup", string(m))
+	m, err := markup.Bytes()
+	if err != nil {
+		return nil, err
 	}
+	params.Set("reply_markup", string(m))
 
 	return a.callAndSetMsg("editMessageReplyMarkup", params)
 }
@@ -132,13 +130,11 @@ func (a *API) EditInlineMarkup(msg string, markup ReplyMarkup) (*Message, error)
 
 	params.Set("inline_message_id", msg)
 
-	if markup != nil {
-		m, err := markup.Bytes()
-		if err != nil {
-			return nil, err
-		}
-		params.Set("reply_markup", string(m))
+	m, err := markup.Bytes()
+	if err != nil {
+		return nil, err
 	}
+	params.Set("reply_markup", string(m))
 
 	return a.callAndSetMsg("editMessageReplyMarkup", params)
 }
