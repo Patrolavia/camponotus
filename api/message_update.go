@@ -9,7 +9,7 @@ import (
 )
 
 // EditText edits text message, maps to https://core.telegram.org/bots/api#editmessagetext
-func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, markup []byte) ([]byte, error) {
+func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -19,11 +19,11 @@ func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, 
 	optBool(params, "disable_Web_page_preview", noPreview)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("editMessageText", params)
+	return a.callAndSetMsg("editMessageText", params)
 }
 
 // EditInlineText edits inline text message, maps to https://core.telegram.org/bots/api#editmessagetext
-func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup []byte) ([]byte, error) {
+func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)
@@ -32,11 +32,11 @@ func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup []by
 	optBool(params, "disable_Web_page_preview", noPreview)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("editMessageText", params)
+	return a.callAndSetMsg("editMessageText", params)
 }
 
 // EditCaption edits caption message, maps to https://core.telegram.org/bots/api#editmessagecaption
-func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview bool, markup []byte) ([]byte, error) {
+func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview bool, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -46,11 +46,11 @@ func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview 
 	optBool(params, "disable_Web_page_preview", noPreview)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("editMessageCaption", params)
+	return a.callAndSetMsg("editMessageCaption", params)
 }
 
 // EditInlineCaption edits inline caption message, maps to https://core.telegram.org/bots/api#editmessagecaption
-func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, markup []byte) ([]byte, error) {
+func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)
@@ -59,26 +59,26 @@ func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, marku
 	optBool(params, "disable_Web_page_preview", noPreview)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("editMessageCaption", params)
+	return a.callAndSetMsg("editMessageCaption", params)
 }
 
 // EditMarkup edits text message, maps to https://core.telegram.org/bots/api#editmessagetext
-func (a *API) EditMarkup(chat string, msg int, markup []byte) ([]byte, error) {
+func (a *API) EditMarkup(chat string, msg int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
 	params.Set("message_id", strconv.Itoa(msg))
 	params.Set("reply_markup", string(markup))
 
-	return a.call("editMessageReplyMarkup", params)
+	return a.callAndSetMsg("editMessageReplyMarkup", params)
 }
 
 // EditInlineMarkup edits text message, maps to https://core.telegram.org/bots/api#editmessagetext
-func (a *API) EditInlineMarkup(msg string, markup []byte) ([]byte, error) {
+func (a *API) EditInlineMarkup(msg string, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)
 	params.Set("reply_markup", string(markup))
 
-	return a.call("editMessageReplyMarkup", params)
+	return a.callAndSetMsg("editMessageReplyMarkup", params)
 }

@@ -4,6 +4,8 @@
 package api
 
 import (
+	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -11,6 +13,82 @@ import (
 	"net/url"
 	"strconv"
 )
+
+// types for api method result
+
+type result interface {
+	OK() bool
+}
+
+type boolResult struct {
+	Ok bool `json:"ok"`
+}
+
+func (r boolResult) OK() bool {
+	return r.Ok
+}
+
+type intResult struct {
+	boolResult
+	Result int64 `json:"result"`
+}
+
+type updateResult struct {
+	boolResult
+	Updates []Update `json:"result"`
+}
+
+type userResult struct {
+	boolResult
+	User *Victim `json:"result"`
+}
+
+type msgResult struct {
+	boolResult
+	Message *Message `json:"result"`
+}
+
+type profilePhotoResult struct {
+	boolResult
+	UserProfilePhotos *UserProfilePhotos `json:"result"`
+}
+
+type fileResult struct {
+	boolResult
+	File *File `json:"result"`
+}
+
+type memberResult struct {
+	boolResult
+	Member *ChatMember `json:"result"`
+}
+
+type membersResult struct {
+	boolResult
+	Members []ChatMember `json:"result"`
+}
+
+// ErrNotOK means Telegram server returns fail on your method call
+type ErrNotOK struct {
+	Method string
+	Params url.Values
+	Field  string
+	Data   io.Reader
+}
+
+func (e ErrNotOK) Error() string {
+	msg := "is"
+	if e.Data != nil {
+		msg = "is not"
+	}
+	return fmt.Sprintf(
+		"Telegram server returns fail on method %s, param %v, field %s, reader %s nil",
+		e.Method,
+		e.Params,
+		e.Field,
+		msg,
+	)
+}
 
 // API maps all Telegram Bot API methods
 type API struct {
@@ -41,6 +119,32 @@ func (a *API) call(method string, params url.Values) (ret []byte, err error) {
 	defer res.Body.Close()
 
 	return ioutil.ReadAll(res.Body)
+}
+
+func (a *API) callAndSet(method string, params url.Values, res result) error {
+	if res == nil {
+		res = &boolResult{}
+	}
+
+	buf, err := a.call(method, params)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(buf, res)
+	if err == nil && !res.OK() {
+		err = &ErrNotOK{
+			Method: method,
+			Params: params,
+		}
+	}
+	return err
+}
+
+func (a *API) callAndSetMsg(method string, params url.Values) (ret *Message, err error) {
+	var m msgResult
+	err = a.callAndSet(method, params, &m)
+	return m.Message, err
 }
 
 func (a *API) upload(method string, params url.Values, field string, data io.Reader) (ret []byte, err error) {
@@ -78,6 +182,29 @@ func (a *API) upload(method string, params url.Values, field string, data io.Rea
 	close(ch)
 
 	return ioutil.ReadAll(res.Body)
+}
+
+func (a *API) uploadAndSet(method string, params url.Values, field string, data io.Reader, res result) error {
+	if res == nil {
+		res = &boolResult{}
+	}
+
+	buf, err := a.upload(method, params, field, data)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(buf, res)
+	if err == nil && !res.OK() {
+		err = &ErrNotOK{method, params, field, data}
+	}
+	return err
+}
+
+func (a *API) uploadAndSetMsg(method string, params url.Values, field string, data io.Reader) (*Message, error) {
+	var m msgResult
+	err := a.uploadAndSet(method, params, field, data, &m)
+	return m.Message, err
 }
 
 // helpers

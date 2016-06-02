@@ -8,7 +8,7 @@ import "net/url"
 // AnswerInlineQuery maps to https://core.telegram.org/bots/api#answerinlinequery
 func (a *API) AnswerInlineQuery(
 	query string, results []byte, cache int, personal bool, next, pm, pmParam string,
-) ([]byte, error) {
+) error {
 	params := url.Values{}
 
 	params.Set("inline_query_id", query)
@@ -19,5 +19,5 @@ func (a *API) AnswerInlineQuery(
 	optStr(params, "switch_pm_text", pm)
 	optStr(params, "switch_pm_parameter", pmParam)
 
-	return a.call("answerInlineQuery", params)
+	return a.callAndSet("answerInlineQuery", params, nil)
 }

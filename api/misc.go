@@ -9,37 +9,43 @@ import (
 )
 
 // GetMe maps to https://core.telegram.org/bots/api#getme
-func (a *API) GetMe() ([]byte, error) {
-	return a.call("getMe", url.Values{})
+func (a *API) GetMe() (*Victim, error) {
+	var v userResult
+	err := a.callAndSet("getMe", url.Values{}, &v)
+	return v.User, err
 }
 
 // GetUserProfilePhotos maps to https://core.telegram.org/bots/api#getuserprofilephotos
-func (a *API) GetUserProfilePhotos(user, offset, limit int) ([]byte, error) {
+func (a *API) GetUserProfilePhotos(user, offset, limit int) (*UserProfilePhotos, error) {
 	params := url.Values{}
 
 	params.Set("user_id", strconv.Itoa(user))
 	optInt(params, "offset", offset)
 	optInt(params, "limit", limit)
 
-	return a.call("getUserProfilePhotos", params)
+	var r profilePhotoResult
+	err := a.callAndSet("getUserProfilePhotos", params, &r)
+	return r.UserProfilePhotos, err
 }
 
 // GetFile maps to https://core.telegram.org/bots/api#getfile
-func (a *API) GetFile(file string) ([]byte, error) {
+func (a *API) GetFile(file string) (*File, error) {
 	params := url.Values{}
 
 	params.Set("file_id", file)
 
-	return a.call("getFile", params)
+	var r fileResult
+	err := a.callAndSet("getFile", params, &r)
+	return r.File, err
 }
 
 // AnswerCallbackQuery maps to https://core.telegram.org/bots/api#answercallbackquery
-func (a *API) AnswerCallbackQuery(query, text string, alert bool) ([]byte, error) {
+func (a *API) AnswerCallbackQuery(query, text string, alert bool) error {
 	params := url.Values{}
 
 	params.Set("callback_query_id", query)
 	optStr(params, "text", text)
 	optBool(params, "show_alert", alert)
 
-	return a.call("answerCallbackQuery", params)
+	return a.callAndSet("answerCallbackQuery", params, nil)
 }

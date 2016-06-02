@@ -17,7 +17,7 @@ const (
 )
 
 // SendMessage maps to https://core.telegram.org/bots/api#sendmessage
-func (a *API) SendMessage(chat, text, mode string, noPreview, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendMessage(chat, text, mode string, noPreview, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -28,11 +28,11 @@ func (a *API) SendMessage(chat, text, mode string, noPreview, silent bool, reply
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendMessage", params)
+	return a.callAndSetMsg("sendMessage", params)
 }
 
 // ForwardMessage maps to https://core.telegram.org/bots/api#forwardmessage
-func (a *API) ForwardMessage(to, from string, silent bool, message int) ([]byte, error) {
+func (a *API) ForwardMessage(to, from string, silent bool, message int) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", to)
@@ -40,11 +40,11 @@ func (a *API) ForwardMessage(to, from string, silent bool, message int) ([]byte,
 	optBool(params, "disable_notification", silent)
 	params.Set("message_id", strconv.Itoa(message))
 
-	return a.call("forwardMessage", params)
+	return a.callAndSetMsg("forwardMessage", params)
 }
 
 // SendPhoto sends cached photo, maps to https://core.telegram.org/bots/api#sendphoto
-func (a *API) SendPhoto(chat, photo, caption string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendPhoto(chat, photo, caption string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -54,11 +54,11 @@ func (a *API) SendPhoto(chat, photo, caption string, silent bool, reply int, mar
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendPhoto", params)
+	return a.callAndSetMsg("sendPhoto", params)
 }
 
 // UploadPhoto uploads a photo and send it, maps to https://core.telegram.org/bots/api#sendphoto
-func (a *API) UploadPhoto(chat string, photo io.Reader, caption string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) UploadPhoto(chat string, photo io.Reader, caption string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -67,11 +67,11 @@ func (a *API) UploadPhoto(chat string, photo io.Reader, caption string, silent b
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.upload("sendPhoto", params, "photo", photo)
+	return a.uploadAndSetMsg("sendPhoto", params, "photo", photo)
 }
 
 // SendAudio sends cached audio, maps to https://core.telegram.org/bots/api#sendaudio
-func (a *API) SendAudio(chat, audio string, duration int, performer, title string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendAudio(chat, audio string, duration int, performer, title string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -83,11 +83,11 @@ func (a *API) SendAudio(chat, audio string, duration int, performer, title strin
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendAudio", params)
+	return a.callAndSetMsg("sendAudio", params)
 }
 
 // UploadAudio sends cached audio, maps to https://core.telegram.org/bots/api#sendaudio
-func (a *API) UploadAudio(chat string, audio io.Reader, duration int, performer, title string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) UploadAudio(chat string, audio io.Reader, duration int, performer, title string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -98,11 +98,11 @@ func (a *API) UploadAudio(chat string, audio io.Reader, duration int, performer,
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.upload("sendAudio", params, "audio", audio)
+	return a.uploadAndSetMsg("sendAudio", params, "audio", audio)
 }
 
 // SendDocument sends cached document, maps to https://core.telegram.org/bots/api#senddocument
-func (a *API) SendDocument(chat, document, caption string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendDocument(chat, document, caption string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -112,11 +112,11 @@ func (a *API) SendDocument(chat, document, caption string, silent bool, reply in
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendDocument", params)
+	return a.callAndSetMsg("sendDocument", params)
 }
 
 // UploadDocument uploads a document and send it, maps to https://core.telegram.org/bots/api#senddocument
-func (a *API) UploadDocument(chat string, document io.Reader, caption string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) UploadDocument(chat string, document io.Reader, caption string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -125,11 +125,11 @@ func (a *API) UploadDocument(chat string, document io.Reader, caption string, si
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.upload("sendDocument", params, "document", document)
+	return a.uploadAndSetMsg("sendDocument", params, "document", document)
 }
 
 // SendSticker sends cached sticker, maps to https://core.telegram.org/bots/api#sendsticker
-func (a *API) SendSticker(chat, sticker, caption string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendSticker(chat, sticker, caption string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -139,11 +139,11 @@ func (a *API) SendSticker(chat, sticker, caption string, silent bool, reply int,
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendSticker", params)
+	return a.callAndSetMsg("sendSticker", params)
 }
 
 // UploadSticker uploads a sticker and send it, maps to https://core.telegram.org/bots/api#sendsticker
-func (a *API) UploadSticker(chat string, sticker io.Reader, caption string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) UploadSticker(chat string, sticker io.Reader, caption string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -152,11 +152,11 @@ func (a *API) UploadSticker(chat string, sticker io.Reader, caption string, sile
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.upload("sendSticker", params, "sticker", sticker)
+	return a.uploadAndSetMsg("sendSticker", params, "sticker", sticker)
 }
 
 // SendVideo sends cached video, maps to https://core.telegram.org/bots/api#sendvideo
-func (a *API) SendVideo(chat, video string, duration, width, height int, caption string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendVideo(chat, video string, duration, width, height int, caption string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -169,11 +169,11 @@ func (a *API) SendVideo(chat, video string, duration, width, height int, caption
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendVideo", params)
+	return a.callAndSetMsg("sendVideo", params)
 }
 
 // UploadVideo uploads a video and send it, maps to https://core.telegram.org/bots/api#sendvideo
-func (a *API) UploadVideo(chat string, video io.Reader, duration, width, height int, caption string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) UploadVideo(chat string, video io.Reader, duration, width, height int, caption string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -185,11 +185,11 @@ func (a *API) UploadVideo(chat string, video io.Reader, duration, width, height 
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.upload("sendVideo", params, "video", video)
+	return a.uploadAndSetMsg("sendVideo", params, "video", video)
 }
 
 // SendVoice sends cached voice, maps to https://core.telegram.org/bots/api#sendvoice
-func (a *API) SendVoice(chat, voice string, duration int, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendVoice(chat, voice string, duration int, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -199,11 +199,11 @@ func (a *API) SendVoice(chat, voice string, duration int, silent bool, reply int
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendVoice", params)
+	return a.callAndSetMsg("sendVoice", params)
 }
 
 // UploadVoice uploads a voice and send it, maps to https://core.telegram.org/bots/api#sendvoice
-func (a *API) UploadVoice(chat string, voice io.Reader, duration int, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) UploadVoice(chat string, voice io.Reader, duration int, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -212,11 +212,11 @@ func (a *API) UploadVoice(chat string, voice io.Reader, duration int, silent boo
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.upload("sendVoice", params, "voice", voice)
+	return a.uploadAndSetMsg("sendVoice", params, "voice", voice)
 }
 
 // SendLocation maps to https://core.telegram.org/bots/api#sendlocation
-func (a *API) SendLocation(chat string, lat, lng float64, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendLocation(chat string, lat, lng float64, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -226,11 +226,11 @@ func (a *API) SendLocation(chat string, lat, lng float64, silent bool, reply int
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendLocation", params)
+	return a.callAndSetMsg("sendLocation", params)
 }
 
 // SendVenue maps to https://core.telegram.org/bots/api#sendvenue
-func (a *API) SendVenue(chat string, lat, lng float64, title, addr, foursq string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendVenue(chat string, lat, lng float64, title, addr, foursq string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -243,11 +243,11 @@ func (a *API) SendVenue(chat string, lat, lng float64, title, addr, foursq strin
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendVenue", params)
+	return a.callAndSetMsg("sendVenue", params)
 }
 
 // SendContact maps to https://core.telegram.org/bots/api#sendcontact
-func (a *API) SendContact(chat, phone, firstName, lastName string, silent bool, reply int, markup []byte) ([]byte, error) {
+func (a *API) SendContact(chat, phone, firstName, lastName string, silent bool, reply int, markup []byte) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -258,15 +258,15 @@ func (a *API) SendContact(chat, phone, firstName, lastName string, silent bool, 
 	optInt(params, "reply_to_message_id", reply)
 	optJSON(params, "reply_markup", markup)
 
-	return a.call("sendContact", params)
+	return a.callAndSetMsg("sendContact", params)
 }
 
 // SendChatAction maps to https://core.telegram.org/bots/api#sendchataction
-func (a *API) SendChatAction(chat, action string) ([]byte, error) {
+func (a *API) SendChatAction(chat, action string) error {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
 	params.Set("action", action)
 
-	return a.call("sendChatAction", params)
+	return a.callAndSet("sendChatAction", params, nil)
 }

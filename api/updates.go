@@ -9,22 +9,31 @@ import (
 )
 
 // GetUpdates maps to https://core.telegram.org/bots/api#getupdates
-func (a *API) GetUpdates(offset, limit, timeout int) ([]byte, error) {
+func (a *API) GetUpdates(offset, limit, timeout int) ([]Update, error) {
 	params := url.Values{}
 	optInt(params, "offset", offset)
 	optInt(params, "limit", limit)
 	optInt(params, "timeout", timeout)
 
-	return a.call("getUpdates", params)
+	var u updateResult
+	err := a.callAndSet("getUpdates", params, &u)
+	return u.Updates, err
 }
 
 // SetWebhook maps to https://core.telegram.org/bots/api#setwebhook
-func (a *API) SetWebhook(cb string, certificate io.Reader) ([]byte, error) {
+func (a *API) SetWebhook(cb string, certificate io.Reader) error {
 	params := url.Values{}
 	optStr(params, "url", cb)
+	var r boolResult
+	var err error
 	if certificate != nil {
-		return a.upload("setWebhook", params, "certificate", certificate)
+		err = a.uploadAndSet("setWebhook", params, "certificate", certificate, &r)
+	} else {
+		err = a.callAndSet("setWebhook", params, &r)
 	}
 
-	return a.call("setWebhook", params)
+	if err == nil && !r.Ok {
+		err = &ErrNotOK{"setWebhook", params, "certificate", certificate}
+	}
+	return err
 }
