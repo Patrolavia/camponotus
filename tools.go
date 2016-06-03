@@ -17,7 +17,7 @@ type LongPollFetcher struct {
 	InlineQuery        chan *InlineQuery
 	ChosenInlineResult chan *ChosenInlineResult
 	CallbackQuery      chan *CallbackQuery
-	API                *API
+	API                API
 }
 
 type byUpdateID []Update

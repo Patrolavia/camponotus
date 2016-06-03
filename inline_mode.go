@@ -9,7 +9,7 @@ import (
 )
 
 // AnswerInlineQuery maps to https://core.telegram.org/bots/api#answerinlinequery
-func (a *API) AnswerInlineQuery(
+func (a *api) AnswerInlineQuery(
 	query string, results []InlineQueryResult, cache int, personal bool, next, pm, pmParam string,
 ) error {
 	params := url.Values{}

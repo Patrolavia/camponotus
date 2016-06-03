@@ -17,7 +17,7 @@ const (
 )
 
 // SendMessage maps to https://core.telegram.org/bots/api#sendmessage
-func (a *API) SendMessage(chat, text, mode string, noPreview, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendMessage(chat, text, mode string, noPreview, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -39,7 +39,7 @@ func (a *API) SendMessage(chat, text, mode string, noPreview, silent bool, reply
 }
 
 // ForwardMessage maps to https://core.telegram.org/bots/api#forwardmessage
-func (a *API) ForwardMessage(to, from string, silent bool, message int) (*Message, error) {
+func (a *api) ForwardMessage(to, from string, silent bool, message int) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", to)
@@ -51,7 +51,7 @@ func (a *API) ForwardMessage(to, from string, silent bool, message int) (*Messag
 }
 
 // SendPhoto sends cached photo, maps to https://core.telegram.org/bots/api#sendphoto
-func (a *API) SendPhoto(chat, photo, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendPhoto(chat, photo, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -72,7 +72,7 @@ func (a *API) SendPhoto(chat, photo, caption string, silent bool, reply int, mar
 }
 
 // UploadPhoto uploads a photo and send it, maps to https://core.telegram.org/bots/api#sendphoto
-func (a *API) UploadPhoto(chat string, photo io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) UploadPhoto(chat string, photo io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -92,7 +92,7 @@ func (a *API) UploadPhoto(chat string, photo io.Reader, caption string, silent b
 }
 
 // SendAudio sends cached audio, maps to https://core.telegram.org/bots/api#sendaudio
-func (a *API) SendAudio(chat, audio string, duration int, performer, title string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendAudio(chat, audio string, duration int, performer, title string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -115,7 +115,7 @@ func (a *API) SendAudio(chat, audio string, duration int, performer, title strin
 }
 
 // UploadAudio sends cached audio, maps to https://core.telegram.org/bots/api#sendaudio
-func (a *API) UploadAudio(chat string, audio io.Reader, duration int, performer, title string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) UploadAudio(chat string, audio io.Reader, duration int, performer, title string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -137,7 +137,7 @@ func (a *API) UploadAudio(chat string, audio io.Reader, duration int, performer,
 }
 
 // SendDocument sends cached document, maps to https://core.telegram.org/bots/api#senddocument
-func (a *API) SendDocument(chat, document, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendDocument(chat, document, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -158,7 +158,7 @@ func (a *API) SendDocument(chat, document, caption string, silent bool, reply in
 }
 
 // UploadDocument uploads a document and send it, maps to https://core.telegram.org/bots/api#senddocument
-func (a *API) UploadDocument(chat string, document io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) UploadDocument(chat string, document io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -178,7 +178,7 @@ func (a *API) UploadDocument(chat string, document io.Reader, caption string, si
 }
 
 // SendSticker sends cached sticker, maps to https://core.telegram.org/bots/api#sendsticker
-func (a *API) SendSticker(chat, sticker, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendSticker(chat, sticker, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -199,7 +199,7 @@ func (a *API) SendSticker(chat, sticker, caption string, silent bool, reply int,
 }
 
 // UploadSticker uploads a sticker and send it, maps to https://core.telegram.org/bots/api#sendsticker
-func (a *API) UploadSticker(chat string, sticker io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) UploadSticker(chat string, sticker io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -218,7 +218,7 @@ func (a *API) UploadSticker(chat string, sticker io.Reader, caption string, sile
 }
 
 // SendVideo sends cached video, maps to https://core.telegram.org/bots/api#sendvideo
-func (a *API) SendVideo(chat, video string, duration, width, height int, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendVideo(chat, video string, duration, width, height int, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -242,7 +242,7 @@ func (a *API) SendVideo(chat, video string, duration, width, height int, caption
 }
 
 // UploadVideo uploads a video and send it, maps to https://core.telegram.org/bots/api#sendvideo
-func (a *API) UploadVideo(chat string, video io.Reader, duration, width, height int, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) UploadVideo(chat string, video io.Reader, duration, width, height int, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -265,7 +265,7 @@ func (a *API) UploadVideo(chat string, video io.Reader, duration, width, height 
 }
 
 // SendVoice sends cached voice, maps to https://core.telegram.org/bots/api#sendvoice
-func (a *API) SendVoice(chat, voice string, duration int, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendVoice(chat, voice string, duration int, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -286,7 +286,7 @@ func (a *API) SendVoice(chat, voice string, duration int, silent bool, reply int
 }
 
 // UploadVoice uploads a voice and send it, maps to https://core.telegram.org/bots/api#sendvoice
-func (a *API) UploadVoice(chat string, voice io.Reader, duration int, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) UploadVoice(chat string, voice io.Reader, duration int, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -306,7 +306,7 @@ func (a *API) UploadVoice(chat string, voice io.Reader, duration int, silent boo
 }
 
 // SendLocation maps to https://core.telegram.org/bots/api#sendlocation
-func (a *API) SendLocation(chat string, lat, lng float64, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendLocation(chat string, lat, lng float64, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -327,7 +327,7 @@ func (a *API) SendLocation(chat string, lat, lng float64, silent bool, reply int
 }
 
 // SendVenue maps to https://core.telegram.org/bots/api#sendvenue
-func (a *API) SendVenue(chat string, lat, lng float64, title, addr, foursq string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendVenue(chat string, lat, lng float64, title, addr, foursq string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -351,7 +351,7 @@ func (a *API) SendVenue(chat string, lat, lng float64, title, addr, foursq strin
 }
 
 // SendContact maps to https://core.telegram.org/bots/api#sendcontact
-func (a *API) SendContact(chat, phone, firstName, lastName string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
+func (a *api) SendContact(chat, phone, firstName, lastName string, silent bool, reply int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -373,7 +373,7 @@ func (a *API) SendContact(chat, phone, firstName, lastName string, silent bool, 
 }
 
 // SendChatAction maps to https://core.telegram.org/bots/api#sendchataction
-func (a *API) SendChatAction(chat, action string) error {
+func (a *api) SendChatAction(chat, action string) error {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)

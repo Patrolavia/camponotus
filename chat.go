@@ -9,7 +9,7 @@ import (
 )
 
 // KickChatMember maps to https://core.telegram.org/bots/api#kickchatmember
-func (a *API) KickChatMember(chat string, user int) error {
+func (a *api) KickChatMember(chat string, user int) error {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -19,7 +19,7 @@ func (a *API) KickChatMember(chat string, user int) error {
 }
 
 // LeaveChat maps to https://core.telegram.org/bots/api#leavechat
-func (a *API) LeaveChat(chat string) error {
+func (a *api) LeaveChat(chat string) error {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -28,7 +28,7 @@ func (a *API) LeaveChat(chat string) error {
 }
 
 // UnbanChatMember maps to https://core.telegram.org/bots/api#unbanchatmember
-func (a *API) UnbanChatMember(chat string, user int) error {
+func (a *api) UnbanChatMember(chat string, user int) error {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -38,7 +38,7 @@ func (a *API) UnbanChatMember(chat string, user int) error {
 }
 
 // GetChat maps to https://core.telegram.org/bots/api#getchat
-func (a *API) GetChat(chat string) (*Victim, error) {
+func (a *api) GetChat(chat string) (*Victim, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -49,7 +49,7 @@ func (a *API) GetChat(chat string) (*Victim, error) {
 }
 
 // GetChatAdministrators maps to https://core.telegram.org/bots/api#getchatadministrators
-func (a *API) GetChatAdministrators(chat string) ([]ChatMember, error) {
+func (a *api) GetChatAdministrators(chat string) ([]ChatMember, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -60,7 +60,7 @@ func (a *API) GetChatAdministrators(chat string) ([]ChatMember, error) {
 }
 
 // GetChatMembersCount maps to https://core.telegram.org/bots/api#getchatmemberscount
-func (a *API) GetChatMembersCount(chat string) (int, error) {
+func (a *api) GetChatMembersCount(chat string) (int, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -71,7 +71,7 @@ func (a *API) GetChatMembersCount(chat string) (int, error) {
 }
 
 // GetChatMember maps to https://core.telegram.org/bots/api#getchatmember
-func (a *API) GetChatMember(chat string) (*ChatMember, error) {
+func (a *api) GetChatMember(chat string) (*ChatMember, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)

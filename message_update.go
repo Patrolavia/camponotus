@@ -12,7 +12,7 @@ import (
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
+func (a *api) EditText(chat string, msg int, text, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -36,7 +36,7 @@ func (a *API) EditText(chat string, msg int, text, mode string, noPreview bool, 
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
+func (a *api) EditInlineText(msg, text, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)
@@ -59,7 +59,7 @@ func (a *API) EditInlineText(msg, text, mode string, noPreview bool, markup Repl
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
+func (a *api) EditCaption(chat string, msg int, caption, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -83,7 +83,7 @@ func (a *API) EditCaption(chat string, msg int, caption, mode string, noPreview 
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
+func (a *api) EditInlineCaption(msg, caption, mode string, noPreview bool, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)
@@ -106,7 +106,7 @@ func (a *API) EditInlineCaption(msg, caption, mode string, noPreview bool, marku
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditMarkup(chat string, msg int, markup ReplyMarkup) (*Message, error) {
+func (a *api) EditMarkup(chat string, msg int, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("chat_id", chat)
@@ -125,7 +125,7 @@ func (a *API) EditMarkup(chat string, msg int, markup ReplyMarkup) (*Message, er
 //
 // By official documentations, server will return boolean true when editing the message sent by others.
 // This method will report json parse error when such situation.
-func (a *API) EditInlineMarkup(msg string, markup ReplyMarkup) (*Message, error) {
+func (a *api) EditInlineMarkup(msg string, markup ReplyMarkup) (*Message, error) {
 	params := url.Values{}
 
 	params.Set("inline_message_id", msg)

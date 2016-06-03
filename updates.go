@@ -9,7 +9,7 @@ import (
 )
 
 // GetUpdates maps to https://core.telegram.org/bots/api#getupdates
-func (a *API) GetUpdates(offset, limit, timeout int) ([]Update, error) {
+func (a *api) GetUpdates(offset, limit, timeout int) ([]Update, error) {
 	params := url.Values{}
 	optInt(params, "offset", offset)
 	optInt(params, "limit", limit)
@@ -21,7 +21,7 @@ func (a *API) GetUpdates(offset, limit, timeout int) ([]Update, error) {
 }
 
 // SetWebhook maps to https://core.telegram.org/bots/api#setwebhook
-func (a *API) SetWebhook(cb string, certificate io.Reader) error {
+func (a *api) SetWebhook(cb string, certificate io.Reader) error {
 	params := url.Values{}
 	optStr(params, "url", cb)
 	var r boolResult
