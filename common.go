@@ -117,3 +117,14 @@ func optJSON(params url.Values, key string, val []byte) {
 		params.Set(key, string(val))
 	}
 }
+
+// Options abstracts some commonly used options for api methods
+//
+// Not every option supported by every api method.
+type Options struct {
+	ParseMode   string
+	NoPreview   bool
+	Silent      bool
+	ReplyID     int
+	ReplyMarkup ReplyMarkup
+}

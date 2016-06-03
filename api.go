@@ -33,25 +33,25 @@ type API interface {
 	GetUserProfilePhotos(user, offset, limit int) (*UserProfilePhotos, error)
 	KickChatMember(chat string, user int) error
 	LeaveChat(chat string) error
-	SendAudio(chat, audio string, duration int, performer, title string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
+	SendAudio(chat, audio string, duration int, performer, title string, opts *Options) (*Message, error)
 	SendChatAction(chat, action string) error
-	SendContact(chat, phone, firstName, lastName string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	SendDocument(chat, document, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	SendLocation(chat string, lat, lng float64, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	SendMessage(chat, text, mode string, noPreview, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	SendPhoto(chat, photo, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	SendSticker(chat, sticker, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	SendVenue(chat string, lat, lng float64, title, addr, foursq string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	SendVideo(chat, video string, duration, width, height int, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	SendVoice(chat, voice string, duration int, silent bool, reply int, markup ReplyMarkup) (*Message, error)
+	SendContact(chat, phone, firstName, lastName string, opts *Options) (*Message, error)
+	SendDocument(chat, document, caption string, opts *Options) (*Message, error)
+	SendLocation(chat string, lat, lng float64, opts *Options) (*Message, error)
+	SendMessage(chat, text string, opts *Options) (*Message, error)
+	SendPhoto(chat, photo, caption string, opts *Options) (*Message, error)
+	SendSticker(chat, sticker, caption string, opts *Options) (*Message, error)
+	SendVenue(chat string, lat, lng float64, title, addr, foursq string, opts *Options) (*Message, error)
+	SendVideo(chat, video string, duration, width, height int, caption string, opts *Options) (*Message, error)
+	SendVoice(chat, voice string, duration int, opts *Options) (*Message, error)
 	SetWebhook(cb string, certificate io.Reader) error
 	UnbanChatMember(chat string, user int) error
-	UploadAudio(chat string, audio io.Reader, duration int, performer, title string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	UploadDocument(chat string, document io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	UploadPhoto(chat string, photo io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	UploadSticker(chat string, sticker io.Reader, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	UploadVideo(chat string, video io.Reader, duration, width, height int, caption string, silent bool, reply int, markup ReplyMarkup) (*Message, error)
-	UploadVoice(chat string, voice io.Reader, duration int, silent bool, reply int, markup ReplyMarkup) (*Message, error)
+	UploadAudio(chat string, audio io.Reader, duration int, performer, title string, opts *Options) (*Message, error)
+	UploadDocument(chat string, document io.Reader, caption string, opts *Options) (*Message, error)
+	UploadPhoto(chat string, photo io.Reader, caption string, opts *Options) (*Message, error)
+	UploadSticker(chat string, sticker io.Reader, caption string, opts *Options) (*Message, error)
+	UploadVideo(chat string, video io.Reader, duration, width, height int, caption string, opts *Options) (*Message, error)
+	UploadVoice(chat string, voice io.Reader, duration int, opts *Options) (*Message, error)
 }
 
 type api struct {
