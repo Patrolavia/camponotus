@@ -8,10 +8,17 @@ import (
 	"net/url"
 )
 
+// InlineQueryOptions represents optional parameters for api method answerInlineQuery
+type InlineQueryOptions struct {
+	CacheTime   int
+	Personal    bool
+	NextOffset  string
+	SwitchPM    string
+	SwitchParam string
+}
+
 // AnswerInlineQuery maps to https://core.telegram.org/bots/api#answerinlinequery
-func (a *api) AnswerInlineQuery(
-	query string, results []InlineQueryResult, cache int, personal bool, next, pm, pmParam string,
-) error {
+func (a *api) AnswerInlineQuery(query string, results []InlineQueryResult, opts *InlineQueryOptions) error {
 	params := url.Values{}
 
 	params.Set("inline_query_id", query)
@@ -26,11 +33,13 @@ func (a *api) AnswerInlineQuery(
 	}
 	params.Set("results", string(res))
 
-	optInt(params, "cache_time", cache)
-	optBool(params, "is_personal", personal)
-	optStr(params, "next_offset", next)
-	optStr(params, "switch_pm_text", pm)
-	optStr(params, "switch_pm_parameter", pmParam)
+	if opts != nil {
+		optInt(params, "cache_time", opts.CacheTime)
+		optBool(params, "is_personal", opts.Personal)
+		optStr(params, "next_offset", opts.NextOffset)
+		optStr(params, "switch_pm_text", opts.SwitchPM)
+		optStr(params, "switch_pm_parameter", opts.SwitchParam)
+	}
 
 	return a.callAndSet("answerInlineQuery", params, nil)
 }

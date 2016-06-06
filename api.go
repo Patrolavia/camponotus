@@ -15,7 +15,7 @@ import (
 // API maps all Telegram Bot api methods
 type API interface {
 	AnswerCallbackQuery(query, text string, alert bool) error
-	AnswerInlineQuery(query string, results []InlineQueryResult, cache int, personal bool, next, pm, pmParam string) error
+	AnswerInlineQuery(query string, results []InlineQueryResult, opts *InlineQueryOptions) error
 	EditCaption(chat string, msg int, caption, mode string, noPreview bool, markup ReplyMarkup) (*Message, error)
 	EditInlineCaption(msg, caption, mode string, noPreview bool, markup ReplyMarkup) (*Message, error)
 	EditInlineMarkup(msg string, markup ReplyMarkup) (*Message, error)

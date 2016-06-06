@@ -20,7 +20,7 @@ func (f *fake) AnswerCallbackQuery(query, text string, alert bool) error {
 	return nil
 }
 
-func (f *fake) AnswerInlineQuery(query string, results []InlineQueryResult, cache int, personal bool, next, pm, pmParam string) error {
+func (f *fake) AnswerInlineQuery(query string, results []InlineQueryResult, opts *InlineQueryOptions) error {
 	return nil
 }
 
