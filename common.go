@@ -70,6 +70,7 @@ type ErrNotOK struct {
 	Params url.Values
 	Field  string
 	Data   io.Reader
+	Bytes  []byte
 }
 
 func (e ErrNotOK) Error() string {
@@ -78,11 +79,12 @@ func (e ErrNotOK) Error() string {
 		msg = "is not"
 	}
 	return fmt.Sprintf(
-		"Telegram server returns fail on method %s, param %v, field %s, reader %s nil",
+		"Telegram server returns fail on method %s, param %#v, field \"%s\", reader %s nil, response=\"%s\"",
 		e.Method,
 		e.Params,
 		e.Field,
 		msg,
+		string(e.Bytes),
 	)
 }
 

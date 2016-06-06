@@ -33,7 +33,7 @@ func (a *api) SetWebhook(cb string, certificate io.Reader) error {
 	}
 
 	if err == nil && !r.Ok {
-		err = &ErrNotOK{"setWebhook", params, "certificate", certificate}
+		err = &ErrNotOK{"setWebhook", params, "certificate", certificate, []byte{}}
 	}
 	return err
 }

@@ -106,6 +106,7 @@ func (a *api) callAndSet(method string, params url.Values, res result) error {
 		err = &ErrNotOK{
 			Method: method,
 			Params: params,
+			Bytes:  buf,
 		}
 	}
 	return err
@@ -166,7 +167,7 @@ func (a *api) uploadAndSet(method string, params url.Values, field string, data 
 
 	err = json.Unmarshal(buf, res)
 	if err == nil && !res.OK() {
-		err = &ErrNotOK{method, params, field, data}
+		err = &ErrNotOK{method, params, field, data, buf}
 	}
 	return err
 }
