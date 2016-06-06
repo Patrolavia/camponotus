@@ -39,6 +39,25 @@ type Message struct {
 	Pinned                *Message        `json:"pinned_message,omitempty"`
 }
 
+// EntityText returns array of text, each element represents the text of a message entity
+func (m *Message) EntityText() []string {
+	var ret []string
+	if len(m.Entities) < 1 {
+		return ret
+	}
+
+	ret = make([]string, len(m.Entities))
+	runes := []rune(m.Text)
+	for i, e := range m.Entities {
+		switch e.Type {
+		default:
+			ret[i] = string(runes[e.Offset : e.Offset+e.Length])
+		}
+	}
+
+	return ret
+}
+
 // valid message entity types
 const (
 	MentionEntity     = "mention"
