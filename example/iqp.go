@@ -24,21 +24,13 @@ func (p *inlineQueryProcessor) Run() {
 		&telegram.InlineQueryResultPhoto{
 			AbstractInlineQueryResult: telegram.AbstractInlineQueryResult{
 				ID:       "photo",
-				ThumbURL: "http://raspberrypihelp.net/wp-content/uploads/2016/03/Telegram.jpg",
+				ThumbURL: "https://patrolavia.com/logo64.jpg",
 			},
-			URL: "http://raspberrypihelp.net/wp-content/uploads/2016/03/Telegram.jpg",
+			URL: "https://patrolavia.com/logo64.jpg",
 		},
 	}
 	for q := range p.CH {
-		if err := p.API.AnswerInlineQuery(
-			q.ID,
-			results,
-			0,
-			false,
-			"",
-			"",
-			"",
-		); err != nil {
+		if err := p.API.AnswerInlineQuery(q.ID, results, nil); err != nil {
 			log.Fatal(err)
 		}
 	}
