@@ -22,7 +22,7 @@ type InlineQueryResult interface {
 type AbstractInlineQueryResult struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
-	InputMessageContent *InputMessageContent  `json:"input_message_content,omitempty"`
+	InputMessageContent InputMessageContent   `json:"input_message_content,omitempty"`
 	Title               string                `json:"title,omitempty"`
 	Description         string                `json:"description,omitempty"`
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
