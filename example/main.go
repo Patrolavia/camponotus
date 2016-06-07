@@ -1,3 +1,5 @@
+// This program demonstrates the usage of package telegram.
+// It DOES NOT follow go idioms.
 package main
 
 import (
