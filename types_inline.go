@@ -18,8 +18,8 @@ type InlineQueryResult interface {
 	ValidateType() // validates the result type
 }
 
-// AbstractInlineQueryResult holds common fields for inline query results
-type AbstractInlineQueryResult struct {
+// IQR holds common fields for inline query results
+type IQR struct {
 	Type                string                `json:"type"`
 	ID                  string                `json:"id"`
 	InputMessageContent InputMessageContent   `json:"input_message_content,omitempty"`
@@ -27,25 +27,25 @@ type AbstractInlineQueryResult struct {
 	Description         string                `json:"description,omitempty"`
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 	ThumbURL            string                `json:"thumb_url,omitempty"`
+	ThumbWidth          int                   `json:"thumb_width,omitempty"`
+	ThumbHeight         int                   `json:"thumb_height,omitempty"`
 }
 
 // InlineQueryResultArticle represents a link to an article or web page.
 type InlineQueryResultArticle struct {
-	AbstractInlineQueryResult
-	URL         string `json:"url,omitempty"`
-	HideURL     bool   `json:"hide_url,omitempty"`
-	ThumbWidth  int    `json:"thumb_width,omitempty"`
-	ThumbHeight int    `json:"thumb_height,omitempty"`
+	IQR
+	URL     string `json:"url,omitempty"`
+	HideURL bool   `json:"hide_url,omitempty"`
 }
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultArticle) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "article"
+	r.IQR.Type = "article"
 }
 
 // InlineQueryResultPhoto represents a link to a photo.
 type InlineQueryResultPhoto struct {
-	AbstractInlineQueryResult
+	IQR
 	URL     string `json:"photo_url,omitempty"`
 	FileID  string `json:"photo_file_id,omitempty"`
 	Width   int    `json:"photo_width,omitempty"`
@@ -55,12 +55,12 @@ type InlineQueryResultPhoto struct {
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultPhoto) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "photo"
+	r.IQR.Type = "photo"
 }
 
 // InlineQueryResultGif represents a link to an animated GIF file.
 type InlineQueryResultGif struct {
-	AbstractInlineQueryResult
+	IQR
 	URL     string `json:"gif_url,omitempty"`
 	FileID  string `json:"gif_file_id,omitempty"`
 	Width   int    `json:"git_width,omitempty"`
@@ -70,12 +70,12 @@ type InlineQueryResultGif struct {
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultGif) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "gif"
+	r.IQR.Type = "gif"
 }
 
 // InlineQueryResultMpeg4Gif represents a link to a video animation.
 type InlineQueryResultMpeg4Gif struct {
-	AbstractInlineQueryResult
+	IQR
 	URL     string `json:"mpeg4_url,omitempty"`
 	FileID  string `json:"mpeg4_file_id,omitempty"`
 	Width   int    `json:"mpeg4_width,omitempty"`
@@ -85,12 +85,12 @@ type InlineQueryResultMpeg4Gif struct {
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultMpeg4Gif) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "mpeg4_gif"
+	r.IQR.Type = "mpeg4_gif"
 }
 
 // InlineQueryResultVideo represnets a link to a page containing an embedded video player or a video file.
 type InlineQueryResultVideo struct {
-	AbstractInlineQueryResult
+	IQR
 	URL      string `json:"video_url,omitempty"`
 	FileID   string `json:"video_file_id,omitempty"`
 	MimeType string `json:"mime_type"`
@@ -101,12 +101,12 @@ type InlineQueryResultVideo struct {
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultVideo) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "video"
+	r.IQR.Type = "video"
 }
 
 // InlineQueryResultAudio represents a link to an mp3 audio file.
 type InlineQueryResultAudio struct {
-	AbstractInlineQueryResult
+	IQR
 	URL       string `json:"audio_url,omitempty"`
 	FileID    string `json:"audio_file_id,omitempty"`
 	Performer string `json:"performer,omitempty"`
@@ -115,12 +115,12 @@ type InlineQueryResultAudio struct {
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultAudio) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "audio"
+	r.IQR.Type = "audio"
 }
 
 // InlineQueryResultVoice represents a link to a voice recording in an .off container encoded with OPUS.
 type InlineQueryResultVoice struct {
-	AbstractInlineQueryResult
+	IQR
 	URL      string `json:"voice_url,omitempty"`
 	FileID   string `json:"voice_file_id,omitempty"`
 	Duration int    `json:"voice_duration,omitempty"`
@@ -128,81 +128,73 @@ type InlineQueryResultVoice struct {
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultVoice) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "voice"
+	r.IQR.Type = "voice"
 }
 
 // InlineQueryResultDocument represents a link to a file.
 type InlineQueryResultDocument struct {
-	AbstractInlineQueryResult
-	Caption     string `json:"caption,omitempty"`
-	URL         string `json:"document_url,omitempty"`
-	FileID      string `json:"document_file_id,omitempty"`
-	MimeType    string `json:"mime_type"`
-	ThumbWidth  int    `json:"thumb_width,omitempty"`
-	ThumbHeight int    `json:"thumb_height,omitempty"`
+	IQR
+	Caption  string `json:"caption,omitempty"`
+	URL      string `json:"document_url,omitempty"`
+	FileID   string `json:"document_file_id,omitempty"`
+	MimeType string `json:"mime_type"`
 }
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultDocument) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "document"
+	r.IQR.Type = "document"
 }
 
 // InlineQueryResultLocation represents a location on a map.
 type InlineQueryResultLocation struct {
-	AbstractInlineQueryResult
-	Lat         float64 `json:"latitude"`
-	Lng         float64 `json:"longitude"`
-	ThumbWidth  int     `json:"thumb_width,omitempty"`
-	ThumbHeight int     `json:"thumb_height,omitempty"`
+	IQR
+	Lat float64 `json:"latitude"`
+	Lng float64 `json:"longitude"`
 }
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultLocation) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "location"
+	r.IQR.Type = "location"
 }
 
 // InlineQueryResultVenue represents a venue.
 type InlineQueryResultVenue struct {
-	AbstractInlineQueryResult
-	Lat         float64 `json:"latitude"`
-	Lng         float64 `json:"longitude"`
-	Address     string  `json:"address"`
-	Foursquare  string  `json:"foursquare_id,omitempty"`
-	ThumbWidth  int     `json:"thumb_width,omitempty"`
-	ThumbHeight int     `json:"thumb_height,omitempty"`
+	IQR
+	Lat        float64 `json:"latitude"`
+	Lng        float64 `json:"longitude"`
+	Address    string  `json:"address"`
+	Foursquare string  `json:"foursquare_id,omitempty"`
 }
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultVenue) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "venue"
+	r.IQR.Type = "venue"
 }
 
 // InlineQueryResultContact represents a contact with a phone number.
 type InlineQueryResultContact struct {
-	AbstractInlineQueryResult
+	IQR
 	PhoneNumber string `json:"phone_number"`
 	FirstName   string `json:"first_name"`
 	LastName    string `json:"last_name,omitempty"`
-	ThumbWidth  int    `json:"thumb_width,omitempty"`
-	ThumbHeight int    `json:"thumb_height,omitempty"`
 }
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultContact) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "contact"
+	r.IQR.Type = "contact"
 }
 
 // InlineQueryResultSticker represents a link to a sticker stored on the Telegram servers.
 //
 // This struct maps to https://core.telegram.org/bots/api#inlinequeryresultcachedsticker
 type InlineQueryResultSticker struct {
-	AbstractInlineQueryResult
+	IQR
 	FileID string `json:"sticker_file_id"`
 }
 
 // ValidateType validate and rewrite result type
 func (r *InlineQueryResultSticker) ValidateType() {
-	r.AbstractInlineQueryResult.Type = "sticker"
+	r.IQR.Type = "sticker"
 }
 
 // InputMessageContent represents the content of a message to be sent as an result of an inline query.

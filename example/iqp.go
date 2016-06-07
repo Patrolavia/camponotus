@@ -15,14 +15,14 @@ type inlineQueryProcessor struct {
 func (p *inlineQueryProcessor) Run() {
 	results := []telegram.InlineQueryResult{
 		&telegram.InlineQueryResultArticle{
-			AbstractInlineQueryResult: telegram.AbstractInlineQueryResult{
+			IQR: telegram.IQR{
 				ID:                  "article",
 				InputMessageContent: telegram.InputTextMessageContent("the article", telegram.TextMode, false),
 				Title:               "Article",
 			},
 		},
 		&telegram.InlineQueryResultPhoto{
-			AbstractInlineQueryResult: telegram.AbstractInlineQueryResult{
+			IQR: telegram.IQR{
 				ID:       "photo",
 				ThumbURL: "https://patrolavia.com/logo64.jpg",
 			},
