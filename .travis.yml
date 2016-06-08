@@ -1,0 +1,10 @@
+# This file is part of Camponotus
+# Camponotus is free software: see LICENSE.txt for more details.
+
+language: go
+
+go:
+  - 1.4
+  - 1.5
+  - 1.6
+  - tip
