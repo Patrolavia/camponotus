@@ -25,6 +25,20 @@ func (p *inlineQueryProcessor) Run() {
 			IQR: telegram.IQR{
 				ID:       "photo",
 				ThumbURL: "https://patrolavia.com/logo64.jpg",
+				ReplyMarkup: &telegram.InlineKeyboardMarkup{
+					[][]telegram.InlineKeyboardButton{
+						[]telegram.InlineKeyboardButton{
+							telegram.InlineKeyboardButton{
+								Text: "img",
+								URL:  "https://patrolavia.com/logo64.jpg",
+							},
+							telegram.InlineKeyboardButton{
+								Text: "web",
+								URL:  "https://patrolavia.com",
+							},
+						},
+					},
+				},
 			},
 			URL: "https://patrolavia.com/logo64.jpg",
 		},
