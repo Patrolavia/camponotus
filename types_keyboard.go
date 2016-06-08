@@ -32,6 +32,36 @@ type KeyboardButton struct {
 	Location bool   `json:"request_location,omitempty"`
 }
 
+// FormatKeyboard reformats keyboard buttons
+//
+// Say you have a serial of buttons [1, 2, 3, 4, 5], by calling this method with ncol=3, it
+// returns [[1, 2, 3], [4, 5]]
+func FormatKeyboard(buttons []KeyboardButton, ncol int) [][]KeyboardButton {
+	var ret [][]KeyboardButton
+	if len(buttons) < 1 {
+		return ret
+	}
+
+	x := 0  // current column
+	y := -1 // current row
+
+	for _, b := range buttons {
+		if x == 0 {
+			y++
+			ret = append(ret, []KeyboardButton{})
+		}
+
+		ret[y] = append(ret[y], b)
+
+		x++
+		if x >= ncol {
+			x = 0
+		}
+	}
+
+	return ret
+}
+
 // ReplyKeyboardHide will hide the current custom keyboard and display the default letter-keyboard.
 type ReplyKeyboardHide struct {
 	Hide      bool `json:"hide_keyboard,omitempty"`
@@ -60,6 +90,36 @@ type InlineKeyboardButton struct {
 	URL    string `json:"url,omitempty"`
 	Data   string `json:"callback_data,omitempty"`
 	Switch string `json:"switch_inline_query,omitempty"`
+}
+
+// FormatInlineKeyboard reformats keyboard buttons
+//
+// Say you have a serial of buttons [1, 2, 3, 4, 5], by calling this method with ncol=3, it
+// returns [[1, 2, 3], [4, 5]]
+func FormatInlineKeyboard(buttons []InlineKeyboardButton, ncol int) [][]InlineKeyboardButton {
+	var ret [][]InlineKeyboardButton
+	if len(buttons) < 1 {
+		return ret
+	}
+
+	x := 0  // current column
+	y := -1 // current row
+
+	for _, b := range buttons {
+		if x == 0 {
+			y++
+			ret = append(ret, []InlineKeyboardButton{})
+		}
+
+		ret[y] = append(ret[y], b)
+
+		x++
+		if x >= ncol {
+			x = 0
+		}
+	}
+
+	return ret
 }
 
 // ForceReply will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply').
